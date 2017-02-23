@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>lt.emasina.resthub</groupId>
+    <artifactId>mod_jk_rpm</artifactId>
+    <version>0.0.1</version>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <packaging>jar</packaging>
+
+    <name>mod_jk_rpm</name>
+    <url>http://tomcat.apache.org/connectors-doc/</url>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>rpm-maven-plugin</artifactId>
+                <version>2.1.5</version>
+                <executions>
+                    <execution>
+                        <id>generate-rpm</id>
+                        <goals>
+                            <goal>rpm</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <license>GPL</license>
+                    <group>CMS</group>
+                    <packager>Valdas Rapsevicius</packager>
+                    <prefix>/opt</prefix>
+                    <name>mod_jk_rpm</name>
+                    <version>${project.version}</version>
+                    <requires>
+                        <require>httpd</require>
+                        <require>httpd-devel</require>
+                        <require>libtool</require>
+                    </requires>
+                    <mappings>
+                        <mapping>
+                            <directory>/etc/httpd/modules</directory>
+                            <directoryIncluded>false</directoryIncluded>
+                            <configuration>noreplace</configuration>
+                            <filemode>755</filemode>
+                            <username>root</username>
+                            <groupname>root</groupname>
+                            <sources>
+                                <softlinkSource>
+                                    <destination>mod_jk.so</destination>
+                                    <location>/opt/mod_jk_rpm/mod_jk.so</location>
+                                </softlinkSource>
+                            </sources>
+                        </mapping>
+                        <mapping>
+                            <directory>/opt/mod_jk_rpm</directory>
+                            <filemode>755</filemode>
+                            <username>root</username>
+                            <groupname>root</groupname>
+                            <sources>
+                                <source>
+                                    <location>src/main/release/tomcat-connectors-1.2.42-src.tar.gz</location>
+                                </source>
+                                <source>
+                                    <location>src/main/release/mod_jk.so</location>
+                                </source>
+                            </sources>
+                        </mapping>
+                    </mappings>
+                    <postinstallScriptlet>
+                        <scriptFile>src/main/release/postinstall.sh</scriptFile>
+                        <fileEncoding>utf-8</fileEncoding>
+                    </postinstallScriptlet>
+                    <postremoveScriptlet>
+                        <scriptFile>src/main/release/postremove.sh</scriptFile>
+                        <fileEncoding>utf-8</fileEncoding>
+                    </postremoveScriptlet>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
