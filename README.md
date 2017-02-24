@@ -22,8 +22,10 @@ sudo rpm -i mod_jk_rpm-0.0.1-1.noarch.rpm
 ```
 This compiles mod_jk and creates assets:
 ```
-/opt/mod_jk_rpm/
-/opt/mod_jk_rpm/mod_jk.so
 /opt/mod_jk_rpm/tomcat-connectors-1.2.42-src.tar.gz
-/etc/httpd/modules/mod_jk.so -> /opt/mod_jk_rpm/mod_jk.so
+/etc/httpd/modules/mod_jk.so
+```
+As well, it updates by adding/activating jk_module
+```
+/etc/httpd/conf/httpd.conf
 ```
