@@ -43,20 +43,6 @@
                     </requires>
                     <mappings>
                         <mapping>
-                            <directory>/etc/httpd/modules</directory>
-                            <directoryIncluded>false</directoryIncluded>
-                            <configuration>noreplace</configuration>
-                            <filemode>755</filemode>
-                            <username>root</username>
-                            <groupname>root</groupname>
-                            <sources>
-                                <softlinkSource>
-                                    <destination>mod_jk.so</destination>
-                                    <location>/opt/mod_jk_rpm/mod_jk.so</location>
-                                </softlinkSource>
-                            </sources>
-                        </mapping>
-                        <mapping>
                             <directory>/opt/mod_jk_rpm</directory>
                             <filemode>755</filemode>
                             <username>root</username>
@@ -65,8 +51,18 @@
                                 <source>
                                     <location>src/main/release/tomcat-connectors-1.2.42-src.tar.gz</location>
                                 </source>
+                            </sources>
+                        </mapping>
+                        <mapping>
+                            <directory>/etc/httpd/conf.d</directory>
+                            <configuration>true</configuration>
+                            <directoryIncluded>false</directoryIncluded>
+                            <sources>
                                 <source>
-                                    <location>src/main/release/mod_jk.so</location>
+                                    <location>src/main/release/mod_jk_rpm.conf</location>
+                                </source>
+                                <source>
+                                    <location>src/main/release/workers.properties</location>
                                 </source>
                             </sources>
                         </mapping>
@@ -75,10 +71,10 @@
                         <scriptFile>src/main/release/postinstall.sh</scriptFile>
                         <fileEncoding>utf-8</fileEncoding>
                     </postinstallScriptlet>
-                    <postremoveScriptlet>
-                        <scriptFile>src/main/release/postremove.sh</scriptFile>
+                    <preremoveScriptlet>
+                        <scriptFile>src/main/release/preremove.sh</scriptFile>
                         <fileEncoding>utf-8</fileEncoding>
-                    </postremoveScriptlet>
+                    </preremoveScriptlet>
                 </configuration>
             </plugin>
         </plugins>
