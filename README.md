@@ -10,7 +10,10 @@ cd mod_jk_rpm
 mvn clean package
 ```
 
-This should create RPM i.e. `target/rpm/mod_jk_rpm/RPMS/noarch/mod_jk_rpm-0.0.1-1.noarch.rpm`.
+This should create RPM i.e. 
+```
+target/rpm/mod_jk_rpm/RPMS/noarch/mod_jk_rpm-0.0.1-1.noarch.rpm
+```
 
 ## Installing RPM
 
